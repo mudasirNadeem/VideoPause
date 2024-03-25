@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="play()">
+        Play Song
+    </button>
+    <input type="range" id="progressRange" min="0" max="100" value="0" oninput="seek()">
+    <script>
+        var audio = new Audio('10.mp3');
+        var progressRange = document.getElementById('progressRange');
+    
+        function play() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+        audio.addEventListener('timeupdate', function(){
+        var currentTime = audio.currentTime;
+            var duration  = audio.duration;
+            var progress = (currentTime / duration) * 100;
+            progressRange.value = progress;
+        });
+        function seek(){
+            var durationTime = audio.duration;
+            var progressRangeValue =   progressRange.value / 100;
+            var calculate =  progressRangeValue * durationTime;
+            audio.currentTime = calculate;
+            audio.play();
+        }
+ 
+    </script>
+</body>
+</html>
